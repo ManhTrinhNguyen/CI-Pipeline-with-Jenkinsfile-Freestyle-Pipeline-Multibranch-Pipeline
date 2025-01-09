@@ -1,5 +1,4 @@
 pipeline {   
-
     agent any
     parameters {
         choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
@@ -16,7 +15,7 @@ pipeline {
 
         stage("test"){
             when{
-                expression{
+                expression {
                     params.executeTests
                 }
             }
@@ -29,12 +28,6 @@ pipeline {
             steps {
                 echo "Deploying the Application"
                 echo "Deploying Version ${params.VERSION}"
-
-                withCredentials([
-                    usernamePassword(credentials: 'server-credentials', usernameVariable: USER, passwordVariable: PWD)
-                ]){
-                    echo "some script ${USER} ${PWD}"
-                }
             }
         }
     } 
