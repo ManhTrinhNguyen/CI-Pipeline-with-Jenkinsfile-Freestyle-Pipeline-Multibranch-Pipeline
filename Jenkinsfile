@@ -9,6 +9,7 @@ pipeline {
         stage("build") {
             steps {
                 echo 'Building the Application' 
+                echo "Building Version ${params.VERSION}"
             }
         }
 
