@@ -9,16 +9,10 @@ pipeline {
         stage("build") {
             steps {
                 echo 'Building the Application' 
-                echo "Building version ${NEW_VERSION}"
             }
         }
 
         stage("test"){
-            when{
-                expression {
-                    params.executeTests
-                }
-            }
             steps {
                 echo "Testing the Application"
             }
@@ -27,7 +21,6 @@ pipeline {
         stage("deploy"){
             steps {
                 echo "Deploying the Application"
-                echo "Deploying Version ${params.VERSION}"
             }
         }
     } 
