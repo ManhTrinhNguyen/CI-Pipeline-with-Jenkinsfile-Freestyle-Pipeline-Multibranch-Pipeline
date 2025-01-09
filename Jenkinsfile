@@ -28,11 +28,6 @@ pipeline {
             steps {
                 echo "Deploying the Application"
                 echo "Deploying version ${params.VERSION}"
-                withCredentials([
-                    usernamePassword(credentials: 'server-credentials', usernameVariable: USER, passwordVariable: PWD)
-                ]){
-                    sh echo "some script ${USER} ${PWD}"
-                }
             }
         }
     } 
