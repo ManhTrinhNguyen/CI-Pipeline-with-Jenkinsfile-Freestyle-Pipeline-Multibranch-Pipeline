@@ -1,10 +1,9 @@
 def gv
 
 pipeline {   
+    
     agent any
-    tools {
-        maven 'Maven'
-    }
+    
     stages {
         stage("build") {
             steps {
@@ -17,9 +16,11 @@ pipeline {
                 echo "Testing the Application"
             }
         }
+        
         stage("deploy"){
             steps {
                 echo "Deploying the Application"
             }
         }
-} 
+    } 
+}
