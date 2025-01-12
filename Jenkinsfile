@@ -45,7 +45,7 @@ pipeline {
                 }
 
                 withCredentials([
-                    usernamePassword(credentialsId: 'server-credentials', usernameVariable: 'USER', passwordVariable: 'PWD')
+                    usernamePassword(credentialsId: 'github-credentials', usernameVariable: 'USER', passwordVariable: 'PWD')
                 ]){
                     echo "some script ${USER} ${PWD}"
                 }
