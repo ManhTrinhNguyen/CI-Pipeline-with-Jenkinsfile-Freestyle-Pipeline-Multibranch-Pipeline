@@ -1,15 +1,27 @@
+def gv
+
 pipeline {   
+
     agent any
     parameters {
         choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
         booleanParam(name: 'executeTests', defaultValue: true, description: '')
     }
-   
+    
     stages {
+        stage("init") {
+            steps {
+                script {
+                    gv = load "script.groovy"
+                }
+            }
+        }
+
         stage("build") {
             steps {
-                echo 'Building the Application' 
-                echo "Building Version ${params.VERSION}"
+                script {
+                    gv.buildApp()
+                }
             }
         }
 
@@ -20,18 +32,22 @@ pipeline {
                 }
             }
             steps {
-                echo "Testing the Application"
+                script {
+                    gv.testApp()
+                }
             }
         }
         
         stage("deploy"){
             steps {
-                echo "Deploying the Application"
-                echo "Deploying version ${params.VERSION}"
+                script {
+                    gv.deployApp()
+                }
+
                 withCredentials([
-                    usernamePassword(credentialsId: 'github-credentials', usernameVariable: 'USER', passwordVariable: 'PWD')
+                    usernamePassword(credentials: 'server-credentials', usernameVariable: USER, passwordVariable: PWD)
                 ]){
-                    echo 'username $USER password $PWD'
+                    echo "some script ${USER} ${PWD}"
                 }
             }
         }
