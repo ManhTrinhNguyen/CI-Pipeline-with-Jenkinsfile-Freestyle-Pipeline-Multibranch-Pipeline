@@ -12,7 +12,7 @@ pipeline {
             steps {
                 echo 'Building the Application' 
                 echo "Building Version ${params.VERSION}"
-                echo "Github credentitals ${SERVER_CREDENTIALS}"
+                echo 'Github credentitals $SERVER_CREDENTIALS'
             }
         }
 
