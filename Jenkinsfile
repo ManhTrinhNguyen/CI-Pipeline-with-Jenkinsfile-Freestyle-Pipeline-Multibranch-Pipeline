@@ -29,7 +29,7 @@ pipeline {
                 echo "Deploying the Application"
                 echo "Deploying version ${params.VERSION}"
                 withCredentials([
-                    usernamePassword(credentialsId: 'github-credentials', usernameVariable: USER, passwordVariable: PWD)
+                    usernamePassword(credentialsId: 'github-credentials', usernameVariable: 'USER', passwordVariable: 'PWD')
                 ]){
                     echo "username ${USER} password ${PWD}"
                 }
