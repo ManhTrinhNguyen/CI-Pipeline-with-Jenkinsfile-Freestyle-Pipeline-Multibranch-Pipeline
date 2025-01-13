@@ -3,55 +3,34 @@ def gv
 pipeline {   
 
     agent any
-    parameters {
-        choice(name: 'VERSION', choices: ['1.1.0', '1.2.0', '1.3.0'], description: '')
-        booleanParam(name: 'executeTests', defaultValue: true, description: '')
+    tools {
+        maven 'maven-3.9'
     }
-    
     stages {
-        stage("init") {
+
+        stage("build jar") {
             steps {
-                script {
-                    gv = load "script.groovy"
-                }
+                sh 'mvn package'
             }
         }
 
-        stage("build") {
+        stage("build docker image") {
             steps {
-                script {
-                    gv.buildApp()
-                }
-            }
-        }
-
-        stage("test"){
-            when {
-                expression {
-                    params.executeTests
-                }
-            }
-            steps {
-                script {
-                    gv.testApp()
-                }
-            }
-        }
-        
-        stage("deploy"){
-            steps {
-                script {
-                    env.ENV = input message: "Select the enviroment to deploy to", ok "Okla", parameters [choice(name: 'ONE', choices: ['dev', 'staging', 'production'], description: '')]
-                    
-                    gv.deployApp()
-                    echo "Deploying to ${ENV}"
-                }
+                echo 'Building docker image'
 
                 withCredentials([
-                    usernamePassword(credentialsId: 'github-credentials', usernameVariable: 'USER', passwordVariable: 'PWD')
-                ]){
-                    echo "some script ${USER} ${PWD}"
-                }
+                    usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'USER', passwordVariable: 'PWD')
+                        ]){
+                            sh 'docker build -t nguyenmanhtrinh/demo-app:jma-1.2 .'
+                            sh 'echo $PWD | docker login -u $USER --password-stdin'
+                            sh 'docker push nguyenmanhtrinh/demo-app:jma-1.2'
+                        }
+            }
+        }
+       
+        stage("deploy"){
+            steps {
+               echo "Deploying Application"
             }
         }
     } 
