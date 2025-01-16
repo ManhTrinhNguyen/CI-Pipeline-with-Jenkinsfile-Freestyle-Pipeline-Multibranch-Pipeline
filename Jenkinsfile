@@ -33,7 +33,7 @@ pipeline {
         stage("Build Image") {
             steps {
                 script {
-                    buildImage() 'nguyenmanhtrinh/demo-app:java-app-2.6'
+                    buildImage() 'nguyenmanhtrinh/demo-app:jma-4.1'
                 }
             }
         }
