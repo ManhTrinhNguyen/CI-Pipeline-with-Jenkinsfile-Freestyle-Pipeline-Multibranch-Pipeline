@@ -25,7 +25,7 @@ pipeline {
         stage("build jar") {
             steps {
                 script {
-                    buildJar()
+                    buildJar() 'nguyenmanhtrinh/demo-app:java-app-5.0'
                 }
             }
         }
@@ -33,7 +33,7 @@ pipeline {
         stage("Build Image") {
             steps {
                 script {
-                    buildImage()
+                    buildImage() 'nguyenmanhtrinh/demo-app:java-app-5.0'
                 }
             }
         }
