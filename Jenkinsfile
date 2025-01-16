@@ -16,17 +16,11 @@ pipeline {
             steps {
                script {
                   echo "Testing Applications"
-                  echo "Executing pipline for Branch ${BRANCH_NAME}"
                }
             }
         }
     
         stage("build jar") {
-            // when {
-            //     expression {
-            //         BRANCH_NAME == "main"
-            //     }
-            // }
             steps {
                 script {
                     buildJar()
@@ -44,11 +38,6 @@ pipeline {
 
        
         stage("deploy"){
-            // when {
-            //     expression {
-            //         BRANCH_NAME == "main"
-            //     }
-            // }
             steps {
                echo "Deploying Application"
             }
