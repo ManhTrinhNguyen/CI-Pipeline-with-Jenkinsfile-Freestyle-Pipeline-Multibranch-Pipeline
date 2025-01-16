@@ -25,7 +25,7 @@ pipeline {
         stage("build jar") {
             steps {
                 script {
-                    buildJar() 'nguyenmanhtrinh/demo-app:java-app-5.0'
+                    buildJar()
                 }
             }
         }
